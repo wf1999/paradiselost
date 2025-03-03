@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts China Map with Cities</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        #main {
+            width: 100%;
+            height: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 使用包含市级边界的地理数据
+        $.getJSON('https://geo.datav.aliyun.com/areas_v3/bound/100000_full_city.json', function (chinaJson) {
+
+            //  // 1. 定义需要显示的市区列表
+            // const targetCities = ['北京市', '朝阳区', '广州市', '深圳市'];
+            // // 2. 过滤地理数据
+            // const filteredGeoJson = {
+            //     ...chinaJson,
+            //     features: chinaJson.features.filter(f => 
+            //         targetCities.includes(f.properties.name)
+            //     )
+            // };
+
+            echarts.registerMap('china', chinaJson);
+
+            var option = {
+                title: {
+                    text: '全国市级地图',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                visualMap: {
+                    min: 0,
+                    max: 5,
+                    left: 'right',
+                    top: 'bottom',
+                    text: ['高', '低'],
+                    calculable: true,
+                    inRange: {
+                        color: ['lightgreen', 'yellow', 'orange', 'red', 'purple', 'maroon']
+                    }
+                },
+                series: [{
+                    name: '失乐园城市分布',
+                    type: 'map',
+                    map: 'china',
+                    roam: true,
+                    label: {
+                        // show: true,
+                        fontSize: 10 // 缩小标签字号以适应市级显示
+                    },
+                    // 注意：需要确保数据中的name与地理数据中的市级名称完全匹配
+                    data: [
+                        { name: '台湾省', value: 1 },                   
+                        { name: '包头市', value: 1 },                   
+                        { name: '朝阳区', value: 1 },                 
+                        { name: '保定市', value: 1 },                 
+                        { name: '广州市', value: 1 },
+                        { name: '深圳市', value: 1 },
+                        { name: '成都市', value: 1 },
+                        { name: '广东省', value: 5 }
+                        // 添加更多市级数据...
+                    ]
+                }]
+            };
+
+            myChart.setOption(option);
+        });
+    </script>
+</body>
+</html>
