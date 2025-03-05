@@ -42,7 +42,6 @@
                     trigger: 'item',
                     // 自定义悬浮提示内容
                     formatter: function (params) {
-						console.log(params.value);
                         return '城市：' + params.name +
 						'<br/>人员：' + (isNaN(params.value) ? "0": params.value) + 
 						'<br/>' + (params.data.uStr === undefined ? "": params.data.uStr);
