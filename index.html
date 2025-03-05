@@ -38,8 +38,15 @@
                     text: '全国市级地图',
                     left: 'center'
                 },
-                tooltip: {
-                    trigger: 'item'
+                 tooltip: {
+                    trigger: 'item',
+                    // 自定义悬浮提示内容
+                    formatter: function (params) {
+						console.log(params.value);
+                        return '城市：' + params.name +
+						'<br/>人员：' + (isNaN(params.value) ? "0": params.value) + 
+						'<br/>' + (params.data.uStr === undefined ? "": params.data.uStr);
+                    }
                 },
                 visualMap: {
                     min: 0,
@@ -63,14 +70,13 @@
                     },
                     // 注意：需要确保数据中的name与地理数据中的市级名称完全匹配
                     data: [
-                        { name: '台湾省', value: 1 },                   
-                        { name: '包头市', value: 1 },                   
-                        { name: '朝阳区', value: 1 },                 
-                        { name: '保定市', value: 1 },                 
-                        { name: '广州市', value: 1 },
-                        { name: '深圳市', value: 1 },
-                        { name: '成都市', value: 1 },
-                        { name: '长沙市', value: 1 }
+                        { name: '台湾省', value: 1,uStr: '千儿'  },                   
+                        { name: '包头市', value: 1,uStr: '蛮' },                   
+                        { name: '朝阳区', value: 1,uStr: '椰'  },                 
+                        { name: '保定市', value: 1,uStr: '冰冰'  },                 
+                        { name: '东莞市', value: 1,uStr: '栗子'  },
+                        { name: '珠海市', value: 1,uStr: '哈尼' },
+                        { name: '长沙市', value: 1,uStr: '小遇' }
                         // 添加更多市级数据...
                     ]
                 }]
